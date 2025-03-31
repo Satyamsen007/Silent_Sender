@@ -4,8 +4,7 @@ import dbConnect from '@/lib/dbConnect';
 import UserModel from '@/model/User';
 import { User } from 'next-auth';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export async function POST(_req: Request) {
+export async function POST(req: Request) {
   await dbConnect();
   const session = await getServerSession(authOptions);
   const user: User = session?.user as User;
@@ -17,7 +16,7 @@ export async function POST(_req: Request) {
     }, { status: 300 })
   }
   const userId = user._id;
-  const { acceptMessages } = await _req.json();
+  const { acceptMessages } = await req.json();
 
   try {
     const updatedUser = await UserModel.findByIdAndUpdate({ _id: userId }, { isAcceptingMessage: acceptMessages }, { new: true });
@@ -43,7 +42,7 @@ export async function POST(_req: Request) {
   }
 }
 
-export async function GET(req: Request) {
+export async function GET() {
   await dbConnect();
   const session = await getServerSession(authOptions);
   const user: User = session?.user as User;

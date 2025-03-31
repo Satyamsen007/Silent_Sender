@@ -22,12 +22,13 @@ Make sure you have the following installed:
 
 ### Installation
 Clone the repository and install dependencies:
-\`\`\`bash
+
+```bash
 git clone https://github.com/yourusername/silentsender.git  
 cd silentsender  
 npm install  
 npm run dev  
-\`\`\`
+
 
 ## 💡 Contribute
 Contributions are welcome! Feel free to fork the repo and submit a pull request.

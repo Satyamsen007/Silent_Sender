@@ -4,6 +4,7 @@ import dbConnect from '@/lib/dbConnect';
 import UserModel from '@/model/User';
 import { User } from 'next-auth';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export async function POST(_req: Request) {
   await dbConnect();
   const session = await getServerSession(authOptions);

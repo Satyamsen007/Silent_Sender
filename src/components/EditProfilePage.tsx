@@ -130,7 +130,7 @@ const EditProfilePage = () => {
     }
   }, [session])
 
-  const onSelectFile = (e: any) => {
+  const onSelectFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
 
     if (!file) return;
@@ -146,9 +146,9 @@ const EditProfilePage = () => {
       const imageUrl = fileReader.result?.toString() || '';
       imageElement.src = imageUrl;
 
-      imageElement.addEventListener('load', (event: any) => {
-        const { naturalWidth, naturalHeight } = event.currentTarget;
-        if (naturalWidth < MIN_DIMENSION || naturalHeight < MIN_DIMENSION) {
+      imageElement.addEventListener('load', (event: Event) => {
+        const img = event.currentTarget as HTMLImageElement;
+        if (img.naturalWidth < MIN_DIMENSION || img.naturalHeight < MIN_DIMENSION) {
           setCropImageError('Image must be at least 150x150 pixels.');
           return setImageSrc('');
         }

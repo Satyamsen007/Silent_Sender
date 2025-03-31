@@ -12,7 +12,6 @@ import axios, { AxiosError } from "axios"
 import { Check, Loader2, RefreshCcw } from "lucide-react"
 import { User } from "next-auth"
 import { useSession } from "next-auth/react"
-import { useRouter } from "next/navigation"
 import { useCallback, useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
@@ -26,7 +25,6 @@ const DashboardPage = () => {
   const handleDeleteMessage = (messageId: string) => {
     setMessages((prev) => prev.filter((msg) => msg._id !== messageId));
   }
-  const router = useRouter()
   const form = useForm({
     resolver: zodResolver(acceptMessagesSchemaValidation)
   });

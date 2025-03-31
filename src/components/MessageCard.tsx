@@ -3,7 +3,6 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
@@ -35,6 +34,7 @@ const MessageCard = ({ message, onMessageDelete }: messageCardProp) => {
       toast.success(response.data.message);
       onMessageDelete(message._id);
     } catch (error) {
+      console.log(error);
       toast.error("Failed to delete the message. Please try again.");
     }
   };

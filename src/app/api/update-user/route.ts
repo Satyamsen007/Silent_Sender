@@ -23,7 +23,7 @@ export async function PUT(req: Request) {
       }, { status: 401 });
     }
 
-    let updateFields: any = {};
+    const updateFields: { userName?: string, password?: string, avatar?: string } = {};
 
     if (username) {
       updateFields.userName = username;

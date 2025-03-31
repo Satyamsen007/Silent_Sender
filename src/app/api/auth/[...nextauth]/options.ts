@@ -7,6 +7,12 @@ import UserModel from '@/model/User';
 import { Account } from 'next-auth';
 import GitHubProvider from "next-auth/providers/github";
 
+type CredentialsType = {
+  email?: string;
+  username?: string;
+  password: string;
+};
+
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -17,13 +23,16 @@ export const authOptions: NextAuthOptions = {
         username: { label: "Email", type: "text" },
         password: { label: "Password", type: "password" }
       },
-      async authorize(credentials: any): Promise<any> {
+      async authorize(credentials: CredentialsType | undefined): Promise<any> {
+        if (!credentials?.password || (!credentials?.email && !credentials?.username)) {
+          throw new Error("Email or Username and Password are required");
+        }
         await dbConnect();
         try {
           const user = await UserModel.findOne({
             $or: [
-              { email: credentials.identifier },
-              { userName: credentials.identifier }
+              { email: credentials?.email },
+              { userName: credentials?.username }
             ]
           })
           if (!user) {
@@ -38,8 +47,8 @@ export const authOptions: NextAuthOptions = {
           } else {
             throw new Error('Incorrect password')
           }
-        } catch (err: any) {
-          throw new Error(err)
+        } catch (err) {
+          throw new Error(err instanceof Error ? err.message : "An unknown error occurred");
         }
       }
     }),

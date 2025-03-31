@@ -10,7 +10,6 @@ import axios, { AxiosError } from "axios";
 import { ApiResponse } from "@/types/ApiResponse";
 import { toast } from "sonner";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
 import Image from "next/image";
 
 interface User {
@@ -24,7 +23,6 @@ export default function DiscoverPage() {
   const [allUsers, setAllUsers] = useState<User[]>([]);
   const [fetchUsers, setFetchUsers] = useState(false);
   const { data: session } = useSession();
-  const router = useRouter();
   useEffect(() => {
     const getAllUsers = async () => {
       setFetchUsers(true);

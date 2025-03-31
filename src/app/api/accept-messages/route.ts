@@ -5,6 +5,7 @@ import UserModel from '@/model/User';
 import { User } from 'next-auth';
 
 export async function POST(req: Request) {
+  console.log(req.method);
   await dbConnect();
   const session = await getServerSession(authOptions);
   const user: User = session?.user as User;

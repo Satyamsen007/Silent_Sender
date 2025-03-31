@@ -23,7 +23,7 @@ export const authOptions: NextAuthOptions = {
         username: { label: "Email", type: "text" },
         password: { label: "Password", type: "password" }
       },
-      async authorize(credentials: CredentialsType | undefined): Promise<any> {
+      async authorize(credentials: CredentialsType | undefined): Promise<User | null> {
         if (!credentials?.password || (!credentials?.email && !credentials?.username)) {
           throw new Error("Email or Username and Password are required");
         }
@@ -34,7 +34,7 @@ export const authOptions: NextAuthOptions = {
               { email: credentials?.email },
               { userName: credentials?.username }
             ]
-          })
+          }).lean()
           if (!user) {
             throw new Error('No User found with this email address')
           }
@@ -42,11 +42,10 @@ export const authOptions: NextAuthOptions = {
             throw new Error('Please verify your account first')
           }
           const isPasswordCorrect = await bcrypt.compare(credentials.password, user.password);
-          if (isPasswordCorrect) {
-            return user;
-          } else {
-            throw new Error('Incorrect password')
+          if (!isPasswordCorrect) {
+            throw new Error('Incorrect password');
           }
+          return user.toObject();
         } catch (err) {
           throw new Error(err instanceof Error ? err.message : "An unknown error occurred");
         }

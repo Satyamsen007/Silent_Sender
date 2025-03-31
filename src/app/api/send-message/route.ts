@@ -31,7 +31,7 @@ export async function POST(req: Request) {
       message: 'Message sent successfully',
     }, { status: 201 })
   } catch (error) {
-    console.error('Error while sending message')
+    console.error('Error while sending message',error)
     return Response.json({
       success: false,
       message: 'Error while sending message'

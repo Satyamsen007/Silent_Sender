@@ -3,10 +3,6 @@
 import { useParams, useRouter } from 'next/navigation'
 import { toast } from 'sonner';
 import React, { useState } from 'react'
-import { useForm } from 'react-hook-form';
-import { verifySchemaValidation } from '@/schemas/verifySchema';
-import { z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
 import axios, { AxiosError } from 'axios';
 import { ApiResponse } from '@/types/ApiResponse';
 import { InputOTP, InputOTPGroup, InputOTPSlot } from '@/components/ui/input-otp';

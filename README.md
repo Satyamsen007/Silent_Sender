@@ -17,9 +17,10 @@ SilentSender is a secure and user-friendly platform for sending anonymous messag
 
 ### Prerequisites
 Make sure you have the following installed:
+```bash
 - Node.js
 - npm or yarn
-
+```
 ### Installation
 Clone the repository and install dependencies:
 
@@ -27,8 +28,8 @@ Clone the repository and install dependencies:
 git clone https://github.com/yourusername/silentsender.git  
 cd silentsender  
 npm install  
-npm run dev  
-
+npm run dev
+```
 
 ## 💡 Contribute
 Contributions are welcome! Feel free to fork the repo and submit a pull request.

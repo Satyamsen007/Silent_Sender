@@ -21,8 +21,6 @@ const DashboardPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isSwitchLoading, setIsSwitchLoading] = useState(false);
   const [isCopy, setIsCopy] = useState(false);
-  const [profileUrl, setProfileUrl] = useState<string | null>(null);
-
   const { data: session } = useSession();
   const handleDeleteMessage = (messageId: string) => {
     setMessages((prev) => prev.filter((msg) => msg._id !== messageId));
@@ -81,7 +79,9 @@ const DashboardPage = () => {
     }
   }
   const { userName } = session?.user as User || '';
-  if (!profileUrl) return null;
+
+  const baseUrl = `${window.location.protocol}//${window.location.host}`;
+  const profileUrl = `${baseUrl}/u/${userName}`
 
   const copyToClipboard = () => {
     setIsCopy(true);
@@ -91,12 +91,6 @@ const DashboardPage = () => {
       setIsCopy(false);
     }, 700)
   }
-  useEffect(() => {
-    if (typeof window !== "undefined" && session?.user) {
-      const baseUrl = `${window.location.protocol}//${window.location.host}`;
-      setProfileUrl(`${baseUrl}/u/${session.user.userName}`);
-    }
-  }, [session]);
 
   useEffect(() => {
     console.log(session);

@@ -2,27 +2,23 @@
 
 import { useParams, useRouter } from 'next/navigation'
 import { toast } from 'sonner';
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useForm } from 'react-hook-form';
 import { verifySchemaValidation } from '@/schemas/verifySchema';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import axios, { AxiosError } from 'axios';
 import { ApiResponse } from '@/types/ApiResponse';
-import { REGEXP_ONLY_DIGITS_AND_CHARS } from 'input-otp';
 import { InputOTP, InputOTPGroup, InputOTPSlot } from '@/components/ui/input-otp';
 import { ArrowRight, Loader2, Mail } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
-const page = () => {
+const Page = () => {
   const router = useRouter();
   const [isCodeExpire, setIsCodeExpire] = useState(false);
   const [verifying, setVerifying] = useState(false);
   const param = useParams<{ username: string }>();
   const [code, setCode] = useState<string>('');
-  const form = useForm<z.infer<typeof verifySchemaValidation>>({
-    resolver: zodResolver(verifySchemaValidation),
-  });
 
   const onSubmit = async () => {
     setVerifying(true);
@@ -32,7 +28,7 @@ const page = () => {
       router.replace('/sign-in')
     } catch (error) {
       const axiosError = error as AxiosError<ApiResponse>;
-      let erroMessage = axiosError.response?.data.message;
+      const erroMessage = axiosError.response?.data.message;
       if (erroMessage == 'Verification code has expired pls signUp again to get a new code') {
         setIsCodeExpire(true);
       } else {
@@ -88,4 +84,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page

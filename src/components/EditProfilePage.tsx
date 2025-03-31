@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useCallback, useEffect, useRef } from "react"
+import { useState, useEffect, useRef } from "react"
 import axios, { AxiosError } from "axios"
 import { toast } from "sonner"
 import { useSession } from "next-auth/react";
@@ -9,18 +9,17 @@ import { useForm } from "react-hook-form";
 import { useDebounceCallback } from "usehooks-ts";
 import { useRouter } from "next/navigation";
 import { ApiResponse } from "@/types/ApiResponse";
-import { any, z } from "zod";
+import { z } from "zod";
 import { updateUserProfileSchemaValidation } from "@/schemas/updateUserProfileSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "./ui/form";
 import { Input } from "./ui/input";
-import { AlertTriangle, CameraIcon, Eye, Loader2, PencilIcon, Upload, X } from "lucide-react";
+import { AlertTriangle, Eye, EyeOff, Loader2, PencilIcon, X } from "lucide-react";
 import { Button } from "./ui/button";
-import { Separator } from "./ui/separator";
 import { Skeleton } from "./ui/skeleton";
 import Image from "next/image";
 import 'react-image-crop/dist/ReactCrop.css'
-import { centerCrop, convertToPixelCrop, Crop, makeAspectCrop, PercentCrop, PixelCrop, ReactCrop } from 'react-image-crop'
+import { centerCrop, convertToPixelCrop, Crop, makeAspectCrop, PixelCrop, ReactCrop } from 'react-image-crop'
 const EditProfilePage = () => {
   const [isUpdating, setIsUpdating] = useState<boolean>(false);
   const [newAvatar, setNewAvatar] = useState<string>('');
@@ -36,7 +35,8 @@ const EditProfilePage = () => {
   const [crop, setCrop] = useState<Crop>();
   const [showNewPassword, setShowNewPassword] = useState<boolean>(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false)
-  const [showEyeIcons, setShowEyeIcons] = useState<boolean>()
+  const [showPasswordEyeIcons, setShowPasswordEyeIcons] = useState<boolean>(false)
+  const [showConfirmPasswordEyeIcons, setShowConfirmPasswordEyeIcons] = useState<boolean>(false)
   const [cropImageError, setCropImageError] = useState('')
   const imgRef = useRef<HTMLImageElement | null>(null);
   const previewCanvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -100,7 +100,7 @@ const EditProfilePage = () => {
     } catch (error) {
       console.log('Error while Updating User', error);
       const axiosError = error as AxiosError<ApiResponse>;
-      let erroMessage = axiosError.response?.data.message;
+      const erroMessage = axiosError.response?.data.message;
       toast.error(erroMessage);
     } finally {
       setIsUpdating(false);
@@ -369,15 +369,19 @@ const EditProfilePage = () => {
                     <FormLabel className="ml-2">New Password</FormLabel>
                     <FormControl>
                       <div className="flex items-center relative">
-                        <Input type="password" placeholder="Enter new password"
+                        <Input type={showNewPassword ? 'text' : 'password'} placeholder="Enter new password"
                           value={field.value}
                           onChange={(e) => {
                             field.onChange(e);
-                            setShowEyeIcons(e.target.value.length > 0);
+                            setShowPasswordEyeIcons(e.target.value.length > 0);
                           }}
                           className="pr-10" />
-                        {showEyeIcons && (
-                          <Eye className="absolute right-2 w-6 h-6 cursor-pointer" />
+                        {showPasswordEyeIcons && (
+                          showNewPassword ? (
+                            <EyeOff className="absolute right-2 w-5 h-5 cursor-pointer" onClick={() => setShowNewPassword(false)} />
+                          ) : (
+                            <Eye className="absolute right-2 w-5 h-5 cursor-pointer" onClick={() => setShowNewPassword(true)} />
+                          )
                         )}
                       </div>
                     </FormControl>
@@ -392,7 +396,22 @@ const EditProfilePage = () => {
                   <FormItem className="my-5">
                     <FormLabel className="ml-2">Confirm Password</FormLabel>
                     <FormControl>
-                      <Input type="password" placeholder="Re-enter password" {...field} />
+                      <div className="flex items-center relative">
+                        <Input type={showConfirmPassword ? 'text' : 'password'} placeholder="Re-enter password"
+                          value={field.value}
+                          onChange={(e) => {
+                            field.onChange(e);
+                            setShowConfirmPasswordEyeIcons(e.target.value.length > 0);
+                          }}
+                          className="pr-10" />
+                        {showConfirmPasswordEyeIcons && (
+                          showConfirmPassword ? (
+                            <EyeOff className="absolute right-2 w-5 h-5 cursor-pointer" onClick={() => setShowConfirmPassword(false)} />
+                          ) : (
+                            <Eye className="absolute right-2 w-5 h-5 cursor-pointer" onClick={() => setShowConfirmPassword(true)} />
+                          )
+                        )}
+                      </div>
                     </FormControl>
                     <FormMessage />
                   </FormItem>

@@ -3,21 +3,21 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
 import Link from "next/link"
-import { useCallback, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { useDebounceCallback } from 'usehooks-ts'
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 import { signUpSchemaValidation } from "@/schemas/signUpSchema"
 import axios, { AxiosError } from 'axios'
 import { ApiResponse } from "@/types/ApiResponse"
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { Loader2, UploadCloud } from 'lucide-react'
+import { Loader2 } from 'lucide-react'
 import { signIn } from "next-auth/react"
 import Image from "next/image"
 import { motion } from 'framer-motion'
-const page = () => {
+const Page = () => {
   const [userName, setUserName] = useState('');
   const [userNameMessage, setUserNameMessage] = useState('');
   const [isCheckingUserName, setIsCheckingUserName] = useState(false);
@@ -64,7 +64,7 @@ const page = () => {
     } catch (error) {
       console.log('Error while signUp User', error);
       const axiosError = error as AxiosError<ApiResponse>;
-      let erroMessage = axiosError.response?.data.message;
+      const erroMessage = axiosError.response?.data.message;
       toast.error(erroMessage);
     } finally {
       setIsSigningIn(false);
@@ -193,4 +193,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page

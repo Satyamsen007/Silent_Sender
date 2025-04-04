@@ -4,8 +4,8 @@ import Link from 'next/link'
 import { useSession, signOut } from 'next-auth/react'
 import { User } from 'next-auth'
 import { Button } from './ui/button'
-import {  LogOut, MessageCircle, UserRoundPen } from 'lucide-react'
-import {  AvatarFallback} from './ui/avatar'
+import { LogOut, MessageCircle, UserRoundPen } from 'lucide-react'
+import { AvatarFallback } from './ui/avatar'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from './ui/dropdown-menu'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
@@ -42,7 +42,7 @@ const Navbar = () => {
                     <Image src={user?.avatar as string} alt="avatar" width={112} height={112} className="w-full h-full object-cover" />
                   </div>
                 ) : (
-                  <AvatarFallback>{user.userName?.charAt(0).toUpperCase() || 'SS'}</AvatarFallback>
+                  'hello'
                 )}
               </DropdownMenuTrigger>
 

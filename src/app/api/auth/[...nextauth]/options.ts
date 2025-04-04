@@ -23,18 +23,17 @@ export const authOptions: NextAuthOptions = {
         username: { label: "Email", type: "text" },
         password: { label: "Password", type: "password" }
       },
-      async authorize(credentials: CredentialsType | undefined): Promise<User | null> {
-        if (!credentials?.password || (!credentials?.email && !credentials?.username)) {
-          throw new Error("Email or Username and Password are required");
-        }
+      async authorize(credentials: any): Promise<any> {
         await dbConnect();
         try {
+          console.log(credentials);
+
           const user = await UserModel.findOne({
             $or: [
-              { email: credentials?.email },
+              { email: credentials?.identifier },
               { userName: credentials?.username }
             ]
-          }).lean()
+          })
           if (!user) {
             throw new Error('No User found with this email address')
           }

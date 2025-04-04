@@ -21,7 +21,7 @@ export async function DELETE(req: NextRequest, { params }: { params: { messageId
     const { messageId } = params;
 
     const updateMessageResult = await UserModel.findOneAndUpdate(
-      { _id: user._id },
+      { _id: user?._id },
       { $pull: { messages: { _id: messageId } } },
       { new: true }
     );

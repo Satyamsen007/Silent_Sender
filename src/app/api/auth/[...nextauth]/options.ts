@@ -8,11 +8,9 @@ import { Account } from 'next-auth';
 import GitHubProvider from "next-auth/providers/github";
 
 type CredentialsType = {
-  email?: string;
-  username?: string;
-  password: string;
+  identifier?: string;
+  password?: string;
 };
-
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -23,15 +21,13 @@ export const authOptions: NextAuthOptions = {
         username: { label: "Email", type: "text" },
         password: { label: "Password", type: "password" }
       },
-      async authorize(credentials: any): Promise<any> {
+      async authorize(credentials: CredentialsType | undefined): Promise<User | null> {
         await dbConnect();
         try {
-          console.log(credentials);
-
           const user = await UserModel.findOne({
             $or: [
               { email: credentials?.identifier },
-              { userName: credentials?.username }
+              { userName: credentials?.identifier }
             ]
           })
           if (!user) {
@@ -40,13 +36,14 @@ export const authOptions: NextAuthOptions = {
           if (!user.isVerified) {
             throw new Error('Please verify your account first')
           }
-          const isPasswordCorrect = await bcrypt.compare(credentials.password, user.password);
-          if (!isPasswordCorrect) {
-            throw new Error('Incorrect password');
+          const isPasswordCorrect = await bcrypt.compare(credentials?.password, user.password);
+          if (isPasswordCorrect) {
+            return user;
+          } else {
+            throw new Error('Incorrect password')
           }
-          return user.toObject();
-        } catch (err) {
-          throw new Error(err instanceof Error ? err.message : "An unknown error occurred");
+        } catch (err: any) {
+          throw new Error(err)
         }
       }
     }),

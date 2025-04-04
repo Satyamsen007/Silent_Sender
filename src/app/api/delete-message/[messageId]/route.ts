@@ -1,65 +1,65 @@
-import dbConnect from "@/lib/dbConnect";
-import UserModel from "@/model/User";
-import { getServerSession } from "next-auth";
-import { User } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/options";
-import { NextResponse } from "next/server";
+// import dbConnect from "@/lib/dbConnect";
+// import UserModel from "@/model/User";
+// import { getServerSession } from "next-auth";
+// import { User } from "next-auth";
+// import { authOptions } from "@/app/api/auth/[...nextauth]/options";
+// import { NextResponse } from "next/server";
 
-export async function DELETE(
-  req: Request,
-  { params }: { params: { messageId: string } }
-) {
-  await dbConnect();
-  
-  try {
-    const session = await getServerSession(authOptions);
-    if (!session?.user) {
-      return NextResponse.json(
-        { success: false, message: "Not authenticated" },
-        { status: 401 }
-      );
-    }
+// export async function DELETE(
+//   req: Request,
+//   { params }: { params: { messageId: string } }
+// ) {
+//   await dbConnect();
 
-    const user = session.user as User;
-    const { messageId } = params;
+//   try {
+//     const session = await getServerSession(authOptions);
+//     if (!session?.user) {
+//       return NextResponse.json(
+//         { success: false, message: "Not authenticated" },
+//         { status: 401 }
+//       );
+//     }
 
-    if (!messageId) {
-      return NextResponse.json(
-        { success: false, message: "Message ID is required" },
-        { status: 400 }
-      );
-    }
+//     const user = session.user as User;
+//     const { messageId } = params;
 
-    const updateResult = await UserModel.updateOne(
-      { _id: user._id },
-      { $pull: { messages: { _id: messageId } } }
-    );
+//     if (!messageId) {
+//       return NextResponse.json(
+//         { success: false, message: "Message ID is required" },
+//         { status: 400 }
+//       );
+//     }
 
-    if (updateResult.modifiedCount === 0) {
-      return NextResponse.json(
-        {
-          success: false,
-          message: "Message not found or already deleted",
-        },
-        { status: 404 }
-      );
-    }
+//     const updateResult = await UserModel.updateOne(
+//       { _id: user._id },
+//       { $pull: { messages: { _id: messageId } } }
+//     );
 
-    return NextResponse.json(
-      {
-        success: true,
-        message: "Message deleted successfully",
-      },
-      { status: 200 }
-    );
-  } catch (error) {
-    console.error("Error while deleting message:", error);
-    return NextResponse.json(
-      {
-        success: false,
-        message: "Error while deleting message",
-      },
-      { status: 500 }
-    );
-  }
-}
+//     if (updateResult.modifiedCount === 0) {
+//       return NextResponse.json(
+//         {
+//           success: false,
+//           message: "Message not found or already deleted",
+//         },
+//         { status: 404 }
+//       );
+//     }
+
+//     return NextResponse.json(
+//       {
+//         success: true,
+//         message: "Message deleted successfully",
+//       },
+//       { status: 200 }
+//     );
+//   } catch (error) {
+//     console.error("Error while deleting message:", error);
+//     return NextResponse.json(
+//       {
+//         success: false,
+//         message: "Error while deleting message",
+//       },
+//       { status: 500 }
+//     );
+//   }
+// }

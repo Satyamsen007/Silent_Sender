@@ -80,8 +80,8 @@ const DashboardPage = () => {
   }
   const { userName } = session?.user as User || '';
 
-  const baseUrl = `${window.location.protocol}//${window.location.host}`;
-  const profileUrl = `${baseUrl}/u/${userName}`
+  // const baseUrl = `${window.location.protocol}//${window.location.host}`;
+  const profileUrl = `hello/u/${userName}`
 
   const copyToClipboard = () => {
     setIsCopy(true);

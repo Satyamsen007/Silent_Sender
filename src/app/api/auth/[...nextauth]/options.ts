@@ -7,10 +7,6 @@ import UserModel from '@/model/User';
 import { Account } from 'next-auth';
 import GitHubProvider from "next-auth/providers/github";
 
-type CredentialsType = {
-  identifier?: string;
-  password?: string;
-};
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -21,13 +17,13 @@ export const authOptions: NextAuthOptions = {
         username: { label: "Email", type: "text" },
         password: { label: "Password", type: "password" }
       },
-      async authorize(credentials: CredentialsType | undefined): Promise<User | null> {
+      async authorize(credentials: any): Promise<any> {
         await dbConnect();
         try {
           const user = await UserModel.findOne({
             $or: [
-              { email: credentials?.identifier },
-              { userName: credentials?.identifier }
+              { email: credentials.identifier },
+              { userName: credentials.identifier }
             ]
           })
           if (!user) {
@@ -36,7 +32,7 @@ export const authOptions: NextAuthOptions = {
           if (!user.isVerified) {
             throw new Error('Please verify your account first')
           }
-          const isPasswordCorrect = await bcrypt.compare(credentials?.password, user.password);
+          const isPasswordCorrect = await bcrypt.compare(credentials.password, user.password);
           if (isPasswordCorrect) {
             return user;
           } else {

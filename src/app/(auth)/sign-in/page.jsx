@@ -123,13 +123,13 @@ const Page = () => {
           </form>
           <div className="flex items-center justify-center gap-4">
             <Button onClick={signinWithGoogle} className="py-5 flex gap-3 cursor-pointer items-center">
-              <span><Image src={'/google.webp=s96-fcrop64=1,00000000ffffffff-rw'} alt="" width={25} height={25} /></span>
+              <span><Image src={'/googleLogo.png'} alt="" width={35} height={35} /></span>
               <p className="text-sm">
                 Sign in with Google
               </p>
             </Button>
             <Button onClick={signinWithGitHub} className="py-5 flex gap-3 cursor-pointer items-center">
-              <span><Image src={'/github-mark-white.png'} alt="" width={25} height={25} /></span>
+              <span><Image src={'/githubLogo.png'} alt="" width={30} height={30} /></span>
               <p className="text-sm">
                 Sign in with GitHub
               </p>

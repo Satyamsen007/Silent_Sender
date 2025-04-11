@@ -95,7 +95,7 @@ const EditProfilePage = () => {
         router.refresh();
       }
     } catch (error) {
-      console.log('Error while Updating User', error);
+      console.log('Error while Updating User', error.response?.data.error);
       toast.error(error.response?.data.message);
     } finally {
       setIsUpdating(false);

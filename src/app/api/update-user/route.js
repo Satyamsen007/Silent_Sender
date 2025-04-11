@@ -86,7 +86,8 @@ export async function PUT(req) {
     console.error('Error while updating user profile', error);
     return NextResponse.json({
       success: false,
-      message: 'Error while updating user profile'
+      message: 'Error while updating user profile',
+      error: error
     }, { status: 500 });
   }
 }

@@ -51,6 +51,7 @@ export async function DELETE() {
 
   response.cookies.set("next-auth.session-token", "", { maxAge: 0 });
   response.cookies.set("next-auth.csrf-token", "", { maxAge: 0 });
+  response.cookies.set("__Secure-next-auth.session-token", "", { maxAge: 0 });
 
   return response;
 }

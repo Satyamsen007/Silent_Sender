@@ -9,7 +9,7 @@ export async function DELETE() {
   await dbConnect();
   const session = await getServerSession(authOptions);
   const user = session?.user;
-  
+
   if (!session || !session.user) {
     return NextResponse.json({
       success: false,
@@ -18,7 +18,7 @@ export async function DELETE() {
   }
 
   const existingUser = await UserModel.findOne({ _id: user._id });
-  
+
   if (!existingUser) {
     return NextResponse.json({
       success: false,
@@ -26,16 +26,24 @@ export async function DELETE() {
     }, { status: 404 });
   }
 
+  // Delete avatar if exists
   if (existingUser?.avatar) {
-    const publicId = existingUser.avatar.slice(62, -4);
-    // Extract public ID
-    if (publicId) {
-      await cloudinary.api.delete_resources([publicId]);
+    try {
+      const imageUrl = existingUser.avatar;
+      const parts = imageUrl.split('/');
+      const fileNameWithExt = parts[parts.length - 1];
+      const publicId = fileNameWithExt.split('.')[0];
+
+      if (publicId) {
+        await cloudinary.api.delete_resources([`SilentSender/user_avatars/${publicId}`]);
+      }
+    } catch (error) {
+      console.error("Cloudinary delete error: ", error);
     }
   }
 
   await UserModel.findByIdAndDelete(existingUser._id);
-  
+
   const response = NextResponse.json({
     success: true,
     message: 'User deleted successfully'

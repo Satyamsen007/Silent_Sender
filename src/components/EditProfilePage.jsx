@@ -59,8 +59,7 @@ const EditProfilePage = () => {
     try {
       const response = await axios.delete('/api/deactivate-account');
       toast.success(response.data.message);
-      router.refresh();
-      router.replace('/sign-in');
+      window.location.href = '/sign-in'
     } catch (error) {
       toast.error(error.response?.data.message || 'Error deactivating account');
     } finally {

@@ -279,8 +279,6 @@ const EditProfilePage = () => {
                       )
                     )
                     const profileUrl = previewCanvasRef.current.toDataURL() || ''
-                    console.log(profileUrl);
-
                     setNewAvatar(profileUrl)
                     setChangeProfileWindow(false)
                     setImageSrc('')

@@ -58,11 +58,11 @@ export default function DiscoverPage() {
           <Loader2 className="w-12 h-12 animate-spin" />
         </div>
       ) : !session ? (
-        <div className="h-[60vh] w-full flex justify-center items-center text-2xl text-gray-600">
+        <div className="h-[60vh] max-md:h-[40vh] w-full flex justify-center text-center items-center text-2xl text-gray-600">
           You need to be logged in to see users.
         </div>
       ) : allUsers.length <= 0 ? (
-        <div className="h-[60vh] w-full flex justify-center items-center text-2xl text-gray-600">
+        <div className="h-[60vh] max-md:h-[40vh] w-full flex justify-center text-center items-center text-2xl text-gray-600">
           No users available at the moment.
         </div>
       ) : (

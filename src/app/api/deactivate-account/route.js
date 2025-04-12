@@ -8,16 +8,15 @@ import { v2 as cloudinary } from 'cloudinary';
 export async function DELETE() {
   await dbConnect();
   const session = await getServerSession(authOptions);
-  const user = session?.user;
-
-  if (!session || !session.user) {
+  
+  if (!session?.user) {
     return NextResponse.json({
       success: false,
       message: 'Not authenticated'
     }, { status: 401 });
   }
 
-  const existingUser = await UserModel.findOne({ _id: user._id });
+  const existingUser = await UserModel.findOne({ _id: session.user._id });
 
   if (!existingUser) {
     return NextResponse.json({
@@ -49,9 +48,21 @@ export async function DELETE() {
     message: 'User deleted successfully'
   }, { status: 200 });
 
-  response.cookies.set("next-auth.session-token", "", { maxAge: 0 });
-  response.cookies.set("next-auth.csrf-token", "", { maxAge: 0 });
-  response.cookies.set("__Secure-next-auth.session-token", "", { maxAge: 0 });
+  // Better cookie cleanup
+  const cookiesToClear = [
+    'next-auth.session-token',
+    '__Secure-next-auth.session-token',
+    '__Host-next-auth.session-token'
+  ];
+
+  cookiesToClear.forEach(cookieName => {
+    response.cookies.set(cookieName, "", {
+      expires: new Date(0),
+      path: '/',
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax'
+    });
+  });
 
   return response;
 }

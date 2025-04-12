@@ -1,5 +1,4 @@
 import { v2 as cloudinary } from 'cloudinary';
-import fs from 'fs';
 
 // Configuration
 cloudinary.config({
@@ -9,19 +8,17 @@ cloudinary.config({
   secure: true
 });
 
-const uploadToCloudinary = async (localpath) => {
+const uploadToCloudinary = async (base64Data) => {
   try {
-    if (!localpath) return null;
-    const result = await cloudinary.uploader.upload(localpath, {
+    if (!base64Data) return null;
+    const result = await cloudinary.uploader.upload(base64Data, {
       folder: 'SilentSender/user_avatars',
       resource_type: 'image',
       access_mode: 'public'
     });
-    fs.unlinkSync(localpath);
     return result;
   } catch (error) {
     console.log('Error while uploading image to cloudinary', error);
-    fs.unlinkSync(localpath);
     return null;
   }
 }

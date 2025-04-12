@@ -2,7 +2,6 @@ import UserModel from "@/model/User";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]/options";
 import { NextResponse } from "next/server";
-import { writeFile } from "fs/promises";
 import { uploadToCloudinary } from "@/helpers/uploadToCloudenary";
 import bcrypt from "bcryptjs";
 import dbConnect from "@/lib/dbConnect";
@@ -38,9 +37,6 @@ export async function PUT(req) {
       const ext = match ? match[1] : "png";
 
       const base64Data = avatar.replace(/^data:image\/\w+;base64,/, "");
-      const buffer = Buffer.from(base64Data, "base64");
-      const fileName = `avatar-${Date.now()}.${ext}`;
-      const filePath = `./public/temp/${fileName}`;
 
       // Find user and get existing Cloudinary avatar
       const existingUser = await UserModel.findById(session.user._id);
@@ -51,8 +47,11 @@ export async function PUT(req) {
         }
       }
 
-      await writeFile(filePath, buffer);
-      const uploadedAvatar = await uploadToCloudinary(filePath);
+      // Direct base64 upload
+      const uploadedAvatar = await uploadToCloudinary(
+        `data:image/${ext};base64,${base64Data}`
+      );
+
       if (uploadedAvatar) {
         updateFields.avatar = uploadedAvatar.secure_url;
       }

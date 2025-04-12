@@ -30,7 +30,7 @@ const SendMessagesPage = () => {
     }
   });
   const { register, setValue } = form;
-  
+
   const onSubmit = async (data) => {
     setMessageSent(true);
     try {
@@ -58,7 +58,7 @@ const SendMessagesPage = () => {
   }
 
   return (
-    <div className="my-8 mx-4 md:mx-8 lg:mx-auto p-6 bg-white rounded w-full max-w-6xl">
+    <div className="my-6 md:mx-8 lg:mx-auto p-6 max-md:p-4 bg-white rounded w-full max-w-6xl">
       <motion.h1
         initial={{ opacity: 0, y: -40 }}
         animate={{ opacity: 1, y: 0 }}
@@ -76,7 +76,7 @@ const SendMessagesPage = () => {
               control={form.control}
               render={() => (
                 <FormItem>
-                  <FormLabel className="text-lg font-semibold mb-2 ml-2">Send Anonymous Message to @{userName}</FormLabel>
+                  <FormLabel className="text-lg font-semibold max-md:text-center mb-2 ml-2">Send Anonymous Message to @{userName}</FormLabel>
                   <FormControl>
                     <textarea {...register('content')} placeholder="Write your anonymous message here" rows={5} className="p-4 resize-none border-2 outline-none border-solid rounded-md"></textarea>
                   </FormControl>
@@ -85,7 +85,7 @@ const SendMessagesPage = () => {
               )}
             />
             <div className="w-full flex justify-center items-center">
-              <Button type="submit" disabled={messageSent} className="cursor-pointer w-1/4">
+              <Button type="submit" disabled={messageSent} className="cursor-pointer w-1/2">
                 {
                   messageSent ? (
                     <div className="flex items-center gap-2">
@@ -105,10 +105,12 @@ const SendMessagesPage = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
         className="py-20">
-        <Button disabled={isLoadingMessages} onClick={suggestMessages} className='mb-4 cursor-pointer'>Suggest Messages</Button>
+        <div className="flex max-md:justify-center max-md:items-center">
+          <Button disabled={isLoadingMessages} onClick={suggestMessages} className='mb-4 cursor-pointer'>Suggest Messages</Button>
+        </div>
         <div>
-          <h2 className="text-lg font-semibold mb-2">Click on any message below to select it.</h2>
-          <div className="border-2 border-solid p-5 py-8 rounded-md">
+          <h2 className="text-lg font-semibold max-md:text-center mb-2">Click on any message below to select it.</h2>
+          <div className="border-2 border-solid p-5 max-md:p-2 mt-5 py-8 rounded-md">
             <h2 className="text-xl font-bold mb-2 pb-4 border-solid border-b-2 border-gray-300">Messages</h2>
             <div className="flex flex-col gap-6">
               {
@@ -118,16 +120,16 @@ const SendMessagesPage = () => {
                   ))
                 ) : (
                   messages.map((message, i) => (
-                    <div 
+                    <div
                       onClick={(e) => {
                         const target = e.target;
                         setValue('content', target.textContent || '');
                         toast.success('Message added')
                       }}
-                      className="border-solid border-b-2 border-gray-300 text-center hover:bg-gray-300 duration-200 cursor-pointer hover:rounded-md" 
+                      className="border-solid border-b-2 border-gray-300 text-center hover:bg-gray-300 duration-200 cursor-pointer hover:rounded-md"
                       key={i}
                     >
-                      <p className="text-lg font-semibold py-5">{message}</p>
+                      <p className="text-lg font-semibold py-5 max-md:py-3">{message}</p>
                     </div>
                   ))
                 )

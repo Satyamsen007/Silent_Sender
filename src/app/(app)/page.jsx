@@ -40,7 +40,7 @@ export default function HomePage() {
         initial={{ opacity: 0, x: -50 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.5 }}
-        className="max-w-3xl mx-auto py-10"
+        className="max-w-3xl mx-auto max-md:px-5 py-10"
       >
         <Carousel plugins={[Autoplay({ delay: 3000 })]}>
           <CarouselContent>

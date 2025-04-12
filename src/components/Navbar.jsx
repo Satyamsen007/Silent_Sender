@@ -24,9 +24,9 @@ const Navbar = () => {
 
   return (
     <nav className='p-4 md:py-4 md:px-8 shadow-md'>
-      <div className='container mx-auto flex flex-col md:flex-row justify-between items-center'>
+      <div className='container mx-auto flex justify-between items-center'>
         <Link href="/">
-          <span className='text-xl text-purple-900 font-bold flex items-center gap-1 mb-4 md:mb-0'>
+          <span className='text-xl text-purple-900 font-bold flex items-center gap-1'>
             Silent Sender <Image src='/silentSenderlogo.png' alt='App logo' width={40} height={40} />
           </span>
         </Link>
@@ -43,7 +43,7 @@ const Navbar = () => {
                 {loadAvatar ? (
                   <Skeleton className="w-[55px] h-[55px] rounded-full bg-purple-800" />
                 ) : user?.avatar ? (
-                  <div className="w-[55px] h-[55px] rounded-full overflow-hidden flex items-center justify-center select-none border-[3px] border-purple-600">
+                  <div className="w-[55px] h-[55px] max-md:w-[50px] max-md:h-[50px] rounded-full overflow-hidden flex items-center justify-center select-none border-[3px] border-purple-600">
                     <Image
                       src={user?.avatar}
                       alt="avatar"
@@ -53,7 +53,7 @@ const Navbar = () => {
                     />
                   </div>
                 ) : (
-                  <div className="w-[55px] h-[55px] rounded-full flex items-center justify-center select-none border-[3px] border-purple-600 bg-purple-700 text-white text-2xl font-bold">
+                  <div className="w-[55px] h-[55px] max-md:w-[50px] max-md:h-[50px] rounded-full flex items-center justify-center select-none border-[3px] border-purple-600 bg-purple-700 text-white text-2xl font-bold">
                     {user?.userName?.charAt(0)?.toUpperCase() || 'U'}
                   </div>
                 )}

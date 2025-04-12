@@ -34,11 +34,11 @@ const Page = () => {
     }
   }
   return (
-    <div className='flex justify-center items-center min-h-screen bg-gray-100'>
+    <div className='flex justify-center items-center min-h-screen max-md:px-4 bg-gray-100'>
       <div className='w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-md'>
         <div className='text-center'>
           <h1 className='text-4xl font-extrabold tracking-tight lg:text-5xl mb-6'>Verify you account</h1>
-          <p className='flex justify-center items-center gap-2'>Enter the verification code sent to your email <span>
+          <p className='flex justify-center items-center max-md:flex-wrap gap-2'>Enter the verification code sent to your email <span>
             <Mail />
           </span></p>
         </div>
@@ -50,7 +50,7 @@ const Page = () => {
           >
             <InputOTPGroup>
               {[...Array(6)].map((_, index) => (
-                <InputOTPSlot data-active={false} key={index} index={index} className="border border-solid border-gray-600 w-14 text-2xl" />
+                <InputOTPSlot data-active={false} key={index} index={index} className="border border-solid border-gray-600 w-14 max-md:w-11 text-2xl" />
               ))}
             </InputOTPGroup>
           </InputOTP>

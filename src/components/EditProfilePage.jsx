@@ -210,13 +210,13 @@ const EditProfilePage = () => {
   }
 
   return (
-    <div className="relative">
+    <div className="relative p-6">
       {isUpdating && (
         <div className="w-full h-screen top-0 bg-white absolute opacity-60 z-50 flex justify-center items-center">
           <Loader2 className="w-10 h-10 animate-spin text-gray-900" />
         </div>
       )}
-      <div className="max-w-5xl relative mx-auto p-6">
+      <div className="max-w-5xl relative mx-auto">
         <AnimatePresence>
           {changeProfileWindow && (
             <motion.div
@@ -247,7 +247,7 @@ const EditProfilePage = () => {
               </div>
               {(cropImageError && !imgSrc) && <p className="text-red-500 my-6 text-xs">{cropImageError}</p>}
               {imgSrc && (
-                <div className="flex flex-col items-center">
+                <div className="flex flex-col items-center max-md:mt-10">
                   <ReactCrop
                     crop={crop}
                     circularCrop

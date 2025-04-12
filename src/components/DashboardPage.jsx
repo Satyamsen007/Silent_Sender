@@ -106,7 +106,7 @@ const DashboardPage = () => {
       initial={{ opacity: 0, y: -50 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="my-8 mx-4 md:mx-8 lg:mx-auto p-6 bg-white rounded w-full max-w-6xl"
+      className="my-8 md:mx-8 lg:mx-auto p-6 bg-white rounded w-full max-w-6xl"
     >
       <h1 className="text-4xl font-bold mb-4">User Dashboard</h1>
       <div className="mb-4">

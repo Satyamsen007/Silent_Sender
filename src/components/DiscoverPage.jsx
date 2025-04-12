@@ -34,7 +34,7 @@ export default function DiscoverPage() {
   }, []);
 
   return (
-    <div className="min-h-screen py-10 px-6">
+    <div className="min-h-screen py-10 px-6 max-md:px-3">
       <motion.h1
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}

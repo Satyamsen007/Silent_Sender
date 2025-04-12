@@ -53,13 +53,15 @@ export default function DiscoverPage() {
         Browse through the list of users and send them anonymous messages. Share your thoughts, express your feelings, and connect without revealing your identity.
       </motion.p>
 
-      {fetchUsers && (
+      {fetchUsers ? (
         <div className="h-[60vh] w-full flex justify-center items-center text-2xl text-gray-600">
           <Loader2 className="w-12 h-12 animate-spin" />
         </div>
-      )}
-
-      {allUsers.length <= 0 && fetchUsers || !session ? (
+      ) : !session ? (
+        <div className="h-[60vh] w-full flex justify-center items-center text-2xl text-gray-600">
+          You need to be logged in to see users.
+        </div>
+      ) : allUsers.length <= 0 ? (
         <div className="h-[60vh] w-full flex justify-center items-center text-2xl text-gray-600">
           No users available at the moment.
         </div>

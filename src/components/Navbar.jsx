@@ -31,7 +31,7 @@ const Navbar = () => {
           </span>
         </Link>
         {!session ? (
-          <Link className='w-full md:w-auto' href={'/sign-in'}>
+          <Link className='w-auto' href={'/sign-in'}>
             <Button className='cursor-pointer bg-purple-900 text-white duration-200 transition-all hover:bg-purple-800'>
               Login
             </Button>

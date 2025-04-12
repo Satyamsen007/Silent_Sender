@@ -35,7 +35,7 @@ npm run dev
 Contributions are welcome! Feel free to fork the repo and submit a pull request.
 
 ## 📩 Contact
-For feedback or support, reach out at **[your email or contact link]**.
+For feedback or support, reach out at **[satyamsen280@gmail.com](mailto:satyamsen280@gmail.com)**.
 
-📌 **Live Demo:** _[Add Link]_" > README.md
+📌 **Live Demo:** [https://silent-sender.vercel.app](https://silent-sender.vercel.app/)
 
